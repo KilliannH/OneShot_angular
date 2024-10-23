@@ -11,8 +11,9 @@
         </ul>
 
         <div class="text-end">
-          <button (click)="goTo('/login')" type="button" class="btn btn-outline-light me-2">Login</button>
-          <button (click)="goTo('/signup')" type="button" class="btn btn-warning">Sign-up</button>
+          <button *ngIf="!isLoggedIn" (click)="goTo('/login')" type="button" class="btn btn-outline-light me-2">Login</button>
+          <button *ngIf="!isLoggedIn" (click)="goTo('/signup')" type="button" class="btn btn-warning">Sign-up</button>
+          <button *ngIf="isLoggedIn" (click)="onLogout()" type="button" class="btn btn-warning">Logout</button>
         </div>
       </div>
     </div>

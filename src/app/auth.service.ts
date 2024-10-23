@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private _isAuthenticated = false;
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  public isLoggedIn$ = this.loggedIn.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -16,12 +17,18 @@ export class AuthService {
         (response: any) => {
           // Handle successful login here (e.g., save token, redirect)
           localStorage.setItem('token', response.token);
-          this._isAuthenticated = true
+          this.loggedIn.next(true);
           return response;
       });
   }
+
+  logout() {
+    this.loggedIn.next(false);
+    // Clear token
+    localStorage.removeItem('token');
+  }
   
   isAuthenticated(): boolean {
-    return this._isAuthenticated;
+    return this.loggedIn.getValue();
   }
 }
