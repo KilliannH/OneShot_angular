@@ -19,12 +19,16 @@ export class LoginComponent {
 
   login() {
     console.log(this.email, this.password);
-    this._authService.login(this.email, this.password).subscribe((response: any) => {
-        if(response.token) {
-          console.log('Login successful:', response);
-          // Navigate to a different page, e.g., dashboard
-          this.router.navigate(['/profiles']);
-        }
-    });
+    this._authService.login(this.email, this.password).subscribe({
+      next: (response: any) => {
+        console.log('Login successful:', response);
+        // Navigate to a different page, e.g., dashboard
+        this.router.navigate(['/profiles']);
+      },
+      error: (error: any) => {
+        console.error('Login failed:', error);
+      }
+
+  });
   }
 }

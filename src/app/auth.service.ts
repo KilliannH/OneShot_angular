@@ -1,25 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private loggedIn = new BehaviorSubject<boolean>(false);
+  private loggedIn = new BehaviorSubject<boolean>(this.checkToken());
   public isLoggedIn$ = this.loggedIn.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post('/api/login', { email, password }).pipe(
-        (response: any) => {
-          // Handle successful login here (e.g., save token, redirect)
-          localStorage.setItem('token', response.token);
-          this.loggedIn.next(true);
-          return response;
-      });
+  login(email: string, password: string): any {
+    return this.http.post('/api/login', { email, password }).pipe(map((result: any) => {
+        console.log(result);
+        localStorage.setItem('token', result.token);
+          this.loggedIn.next(true)
+          return result;
+      }));
   }
 
   logout() {
@@ -30,5 +29,9 @@ export class AuthService {
   
   isAuthenticated(): boolean {
     return this.loggedIn.getValue();
+  }
+
+  private checkToken(): boolean {
+    return !!localStorage.getItem('token'); // Check if token exists
   }
 }
