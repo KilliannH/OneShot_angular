@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms'
-import { provideHttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -20,17 +19,12 @@ export class LoginComponent {
 
   login() {
     console.log(this.email, this.password);
-    this._authService.login(this.email, this.password).subscribe({
-      next: (response) => {
-        // Handle successful login here (e.g., save token, redirect)
-        console.log('Login successful:', response);
-        // Navigate to a different page, e.g., dashboard
-        this.router.navigate(['/profiles']);
-      },
-      error: (error) => {
-        // Handle error (e.g., display a message)
-        console.error('Login failed:', error);
-      },
+    this._authService.login(this.email, this.password).subscribe((response: any) => {
+        if(response.token) {
+          console.log('Login successful:', response);
+          // Navigate to a different page, e.g., dashboard
+          this.router.navigate(['/profiles']);
+        }
     });
   }
 }
