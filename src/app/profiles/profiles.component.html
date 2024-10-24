@@ -5,7 +5,7 @@
                 <button type="button" class="btn-trash btn btn-outline-danger"><ng-icon name="bootstrapTrashFill"></ng-icon></button>
                 <button type="button" class="btn-edit btn btn-outline-primary" (click)="openEditProfileModal(content, profile)"><ng-icon name="bootstrapPencilFill"></ng-icon> Edit</button>
             </h6>
-            <h6>{{profile.birthday | date: "yyyy-MM-dd"}}</h6>
+            <h6>{{profile.birthday.year}}-{{profile.birthday.month}}-{{profile.birthday.day}}</h6>
 
             <p>{{profile.job}}</p>
             <p>{{profile.bio}}</p>
@@ -15,7 +15,7 @@
 <!-------------------------- EDIT MODAL  -------------------------->
 <ng-template #content let-editModal>
 	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+		<h4 class="modal-title" id="edit-modal">Profile update</h4>
 		<button type="button" class="btn-close" aria-label="Close" (click)="editModal.dismiss('Cross click')"></button>
 	</div>
 	<div class="modal-body">
@@ -48,7 +48,7 @@
 					<input
 						id="dateOfBirth"
 						class="form-control"
-						[(ngModel)]="selectedProfile.birthdayDate"
+						[(ngModel)]="selectedProfile.birthday"
                         name="dp"
 						ngbDatepicker
 						#dp="ngbDatepicker"
@@ -84,7 +84,3 @@
 		<button type="button" class="btn btn-outline-secondary" (click)="editModal.close('Save click')">Save</button>
 	</div>
 </ng-template>
-
-<hr />
-
-<pre>{{ closeResult }}</pre>

@@ -17,7 +17,6 @@ import { FormsModule } from '@angular/forms';
 export class ProfilesComponent {
   profiles: Array<any> = []
   private modalService = inject(NgbModal);
-	closeResult = '';
   selectedProfile: any;
 
   constructor(private _dataservice: DataService) {}
@@ -33,18 +32,28 @@ export class ProfilesComponent {
   toNgbDate(profiles: Array<any>) {
     for(let profile of profiles) {
       const birthdayDate = new Date(profile.birthday);
-        profile.birthdayDate = new NgbDate(birthdayDate.getFullYear(), birthdayDate.getMonth() + 1, birthdayDate.getDate());
+        profile.birthday = new NgbDate(birthdayDate.getFullYear(), birthdayDate.getMonth() + 1, birthdayDate.getDate());
     }
   }
 
   openEditProfileModal(content: TemplateRef<any>, profile: any) {
     this.selectedProfile = profile;
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+		this.modalService.open(content, { ariaLabelledBy: 'edit-modal' }).result.then(
 			(result) => {
-				this.closeResult = `Closed with: ${result}`;
+        console.log(this.profiles)
+				/*const updatedProfile = this.profiles.filter((x) => x.userId === this.selectedProfile.userId)[0];
+        updatedProfile.displayName = this.selectedProfile.displayName;
+        updatedProfile.gender = this.selectedProfile.gender;
+        updatedProfile.birthday = new Date(
+          this.selectedProfile.birthdayDate.year,
+          this.selectedProfile.birthdayDate.month - 1, // Month is zero-based
+          this.selectedProfile.birthdayDate.day).getTime;
+        updatedProfile.birthdayDate = this.selectedProfile.birthdayDate;
+        updatedProfile.job = this.selectedProfile.job;
+        updatedProfile.bio = this.selectedProfile.bio; */
 			},
 			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+				console.log(`Dismissed ${this.getDismissReason(reason)}`);
 			},
 		);
 	}
