@@ -5,6 +5,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { bootstrapPencilFill, bootstrapTrashFill, bootstrapPlusLg, bootstrapCalendar3 } from '@ng-icons/bootstrap-icons';
 import { ModalDismissReasons, NgbDate, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profiles',
@@ -19,7 +20,7 @@ export class ProfilesComponent {
   private modalService = inject(NgbModal);
   selectedProfile: any;
 
-  constructor(private _dataservice: DataService) {}
+  constructor(private _dataservice: DataService, private _toastr: ToastrService) {}
 
   ngOnInit() {
     this._dataservice.getProfiles().subscribe((res: Array<any>) => {
@@ -59,8 +60,10 @@ export class ProfilesComponent {
           next: (response: any) => {
             console.log("Saved successfully", response);
             // show it
+            this._toastr.success('successfully', 'Saved');
           }, error: (error: any) => {
-            console.log("Failed to save", error);
+            this._toastr.error("Failed to save");
+            // console.log("Failed to save", error);
           }
         });
 
