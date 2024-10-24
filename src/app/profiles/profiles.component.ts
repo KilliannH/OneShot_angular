@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Profiles } from '../types';
 import { DataService } from '../data.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profiles',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './profiles.component.html',
   styleUrl: './profiles.component.css'
 })

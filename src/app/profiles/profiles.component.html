@@ -1,1 +1,8 @@
-<p>profiles works!</p>
+<div class="container">
+    <h3>Profiles : </h3>
+    <div *ngFor="let profile of profiles" class="item">
+            <h6>{{profile.displayName}}, <span>{{profile.gender}}</span></h6>
+            <p>{{profile.bio}}</p>
+            <p>{{profile.job}}</p>
+    </div>
+</div>
