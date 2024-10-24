@@ -41,16 +41,29 @@ export class ProfilesComponent {
 		this.modalService.open(content, { ariaLabelledBy: 'edit-modal' }).result.then(
 			(result) => {
         console.log(this.profiles)
-				/*const updatedProfile = this.profiles.filter((x) => x.userId === this.selectedProfile.userId)[0];
-        updatedProfile.displayName = this.selectedProfile.displayName;
-        updatedProfile.gender = this.selectedProfile.gender;
-        updatedProfile.birthday = new Date(
-          this.selectedProfile.birthdayDate.year,
-          this.selectedProfile.birthdayDate.month - 1, // Month is zero-based
-          this.selectedProfile.birthdayDate.day).getTime;
-        updatedProfile.birthdayDate = this.selectedProfile.birthdayDate;
-        updatedProfile.job = this.selectedProfile.job;
-        updatedProfile.bio = this.selectedProfile.bio; */
+				const dbProfile = {
+          id: this.selectedProfile.id,
+          displayName: this.selectedProfile.displayName,
+          gender: this.selectedProfile.gender,
+          userId: this.selectedProfile.userId,
+
+          // retake the good date format
+          birthday: new Date(this.selectedProfile.birthday.year, this.selectedProfile.birthday.month -1, this.selectedProfile.birthday.day).getTime(),
+          
+          job: this.selectedProfile.job,
+          bio: this.selectedProfile.bio
+        }
+
+        // save it to be
+        this._dataservice.saveProfileById(dbProfile).subscribe({
+          next: (response: any) => {
+            console.log("Saved successfully", response);
+            // show it
+          }, error: (error: any) => {
+            console.log("Failed to save", error);
+          }
+        });
+
 			},
 			(reason) => {
 				console.log(`Dismissed ${this.getDismissReason(reason)}`);

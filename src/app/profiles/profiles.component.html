@@ -5,6 +5,7 @@
                 <button type="button" class="btn-trash btn btn-outline-danger"><ng-icon name="bootstrapTrashFill"></ng-icon></button>
                 <button type="button" class="btn-edit btn btn-outline-primary" (click)="openEditProfileModal(content, profile)"><ng-icon name="bootstrapPencilFill"></ng-icon> Edit</button>
             </h6>
+			<h6>{{profile.userId}}</h6>
             <h6>{{profile.birthday.year}}-{{profile.birthday.month}}-{{profile.birthday.day}}</h6>
 
             <p>{{profile.job}}</p>
@@ -39,6 +40,17 @@
 						class="form-control"
 						[(ngModel)]="selectedProfile.gender"
 						name="gender"
+					/>
+				</div>
+            </div>
+			<div class="mb-3">
+				<label for="userId">UserId</label>
+                <div class="input-group">
+					<input
+						id="userId"
+						class="form-control"
+						[(ngModel)]="selectedProfile.userId"
+						name="userId"
 					/>
 				</div>
             </div>

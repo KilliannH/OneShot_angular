@@ -12,4 +12,7 @@ export class DataService {
   getProfiles(): Observable<any> {
     return this.http.get('/api/profiles');
   }
+  saveProfileById(updatedProfile: any): Observable<any> {
+    return this.http.put('/api/profiles/' + updatedProfile.id, updatedProfile);
+  }
 }
