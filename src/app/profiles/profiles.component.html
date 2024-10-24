@@ -1,10 +1,12 @@
 <div class="container">
-    <h3>Profiles : </h3>
+    <h3>Profiles : <button type="button" class="btn-add btn btn-primary"><ng-icon name="bootstrapPlusLg"></ng-icon> Add</button></h3>
     <div *ngFor="let profile of profiles" class="item">
             <h6>{{profile.displayName}}, <span>{{profile.gender}}</span>
                 <button type="button" class="btn-trash btn btn-outline-danger"><ng-icon name="bootstrapTrashFill"></ng-icon></button>
                 <button type="button" class="btn-edit btn btn-outline-primary"><ng-icon name="bootstrapPencilFill"></ng-icon> Edit</button>
             </h6>
+            <h6>{{profile.birthday}} years old</h6>
+            
             <p>{{profile.job}}</p>
             <p>{{profile.bio}}</p>
     </div>
