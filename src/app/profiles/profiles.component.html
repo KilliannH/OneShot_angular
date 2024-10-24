@@ -3,11 +3,88 @@
     <div *ngFor="let profile of profiles" class="item">
             <h6>{{profile.displayName}}, <span>{{profile.gender}}</span>
                 <button type="button" class="btn-trash btn btn-outline-danger"><ng-icon name="bootstrapTrashFill"></ng-icon></button>
-                <button type="button" class="btn-edit btn btn-outline-primary"><ng-icon name="bootstrapPencilFill"></ng-icon> Edit</button>
+                <button type="button" class="btn-edit btn btn-outline-primary" (click)="openEditProfileModal(content, profile)"><ng-icon name="bootstrapPencilFill"></ng-icon> Edit</button>
             </h6>
-            <h6>{{profile.birthday}} years old</h6>
-            
+            <h6>{{profile.birthday | date: "yyyy-MM-dd"}}</h6>
+
             <p>{{profile.job}}</p>
             <p>{{profile.bio}}</p>
     </div>
 </div>
+
+<!-------------------------- EDIT MODAL  -------------------------->
+<ng-template #content let-editModal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="editModal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form>
+            <div class="mb-3">
+				<label for="displayName">Display Name</label>
+				<div class="input-group">
+					<input
+						id="displayName"
+						class="form-control"
+						[(ngModel)]="selectedProfile.displayName"
+						name="displayName"
+					/>
+				</div>
+			</div>
+            <div class="mb-3">
+				<label for="gender">Gender</label>
+                <div class="input-group">
+					<input
+						id="gender"
+						class="form-control"
+						[(ngModel)]="selectedProfile.gender"
+						name="gender"
+					/>
+				</div>
+            </div>
+			<div class="mb-3">
+				<label for="dateOfBirth">Date of birth</label>
+				<div class="input-group">
+					<input
+						id="dateOfBirth"
+						class="form-control"
+						[(ngModel)]="selectedProfile.birthdayDate"
+                        name="dp"
+						ngbDatepicker
+						#dp="ngbDatepicker"
+					/>
+					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"><ng-icon name="bootstrapCalendar3" size="1.2em"></ng-icon></button>
+				</div>
+			</div>
+            <div class="mb-3">
+				<label for="job">Job</label>
+				<div class="input-group">
+					<input
+						id="job"
+						class="form-control"
+						[(ngModel)]="selectedProfile.job"
+						name="job"
+					/>
+				</div>
+			</div>
+            <div class="mb-3">
+				<label for="bio">Bio</label>
+				<div class="input-group">
+					<input
+						id="bio"
+						class="form-control"
+						[(ngModel)]="selectedProfile.bio"
+						name="bio"
+					/>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-secondary" (click)="editModal.close('Save click')">Save</button>
+	</div>
+</ng-template>
+
+<hr />
+
+<pre>{{ closeResult }}</pre>

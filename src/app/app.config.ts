@@ -9,7 +9,5 @@ import { provideNgIconsConfig } from '@ng-icons/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(withInterceptors([authInterceptor])),
-  provideNgIconsConfig({
-    size: '1em',
-  })]
+  ]
 };
