@@ -26,16 +26,16 @@ export class ProfilesComponent {
   ngOnInit() {
     this._dataservice.getProfiles().subscribe((res: Array<any>) => {
       this.profiles = res;
-      this.toNgbDate(this.profiles);
+      for(let profile of this.profiles) {
+        profile.birthday = this.toNgbDate(profile.birthday);
+      }
       console.log(this.profiles);
     });
   }
 
-  toNgbDate(profiles: Array<any>) {
-    for(let profile of profiles) {
-      const birthdayDate = new Date(profile.birthday);
-        profile.birthday = new NgbDate(birthdayDate.getFullYear(), birthdayDate.getMonth() + 1, birthdayDate.getDate());
-    }
+  toNgbDate(birthday: number): NgbDate {
+    const birthdayDate = new Date(birthday);
+    return new NgbDate(birthdayDate.getFullYear(), birthdayDate.getMonth() + 1, birthdayDate.getDate());
   }
 
   openEditProfileModal(content: TemplateRef<any>, profile: any) {
@@ -95,10 +95,14 @@ export class ProfilesComponent {
         this._dataservice.newProfile(dbProfile).subscribe({
           next: (response: any) => {
             console.log("Saved successfully", response);
-            // show it
+
             this._toastr.success("successfully", "Saved");
+
+            // Use the response to create a new profile object to ensure consistency
+            this.profiles.push({ ...dbProfile, id: response.id, birthday: this.toNgbDate(response.birthday)}); // Assuming the response returns the new ID
+
           }, error: (error: any) => {
-            this._toastr.error("Failed to save", error);
+            this._toastr.error("Failed to save");
           }
         });
 			},
