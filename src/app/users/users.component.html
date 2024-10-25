@@ -1,0 +1,68 @@
+<div class="container">
+    <h3>Users : </h3>
+    <div *ngFor="let user of users" class="item row">
+        <div class="col-md-4">    
+			<h6>{{user.username}}</h6>
+            <p>{{user.email}}</p>
+            <p>{{user.id}}</p>
+		</div>
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<button type="button" class="btn-trash btn btn-outline-danger" (click)="openDeleteUserModal(deleteContent, user)"><ng-icon name="bootstrapTrashFill"></ng-icon></button>
+            <button type="button" class="btn-edit btn btn-outline-primary" (click)="openEditUserModal(editContent, user)"><ng-icon name="bootstrapPencilFill"></ng-icon> Edit</button>
+		</div>
+    </div>
+</div>
+
+<!-------------------------- EDIT MODAL  -------------------------->
+<ng-template #editContent let-editModal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="edit-modal">User update</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="editModal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form>
+            <div class="mb-3">
+				<label for="username">Username</label>
+				<div class="input-group">
+					<input
+						id="username"
+						class="form-control"
+						[(ngModel)]="selectedUser.username"
+						name="username"
+					/>
+				</div>
+			</div>
+            <div class="mb-3">
+				<label for="email">Email</label>
+                <div class="input-group">
+					<input
+						id="email"
+						class="form-control"
+						[(ngModel)]="selectedUser.email"
+						name="email"
+					/>
+				</div>
+            </div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-secondary" (click)="editModal.close('Save click')">Save</button>
+	</div>
+</ng-template>
+
+<!-------------------------- DELETE MODAL  -------------------------->
+<ng-template #deleteContent let-deleteModal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="delete-modal">Delete user</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="deleteModal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+        <div class="mb-3">
+			<p>Are you sure you want to delete this user ?</p>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-danger" (click)="deleteModal.close('Delete click')">Delete</button>
+	</div>
+</ng-template>

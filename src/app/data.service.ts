@@ -21,4 +21,14 @@ export class DataService {
   removeProfile(profileId: string): Observable<any> {
     return this.http.delete('/api/profiles/' + profileId);
   }
+
+  getUsers(): Observable<any> {
+    return this.http.get('/api/users');
+  }
+  saveUserById(updatedUser: any): Observable<any> {
+    return this.http.put('/api/users/' + updatedUser.id, updatedUser);
+  }
+  removeUser(userId: string): Observable<any> {
+    return this.http.delete('/api/users/' + userId);
+  }
 }
