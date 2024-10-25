@@ -1,9 +1,9 @@
 <div class="container">
-    <h3>Profiles : <button type="button" class="btn-add btn btn-primary"><ng-icon name="bootstrapPlusLg"></ng-icon> Add</button></h3>
+    <h3>Profiles : <button type="button" class="btn-add btn btn-primary" (click)="openAddProfileModal(addContent)"><ng-icon name="bootstrapPlusLg"></ng-icon> Add</button></h3>
     <div *ngFor="let profile of profiles" class="item">
             <h6>{{profile.displayName}}, <span>{{profile.gender}}</span>
                 <button type="button" class="btn-trash btn btn-outline-danger"><ng-icon name="bootstrapTrashFill"></ng-icon></button>
-                <button type="button" class="btn-edit btn btn-outline-primary" (click)="openEditProfileModal(content, profile)"><ng-icon name="bootstrapPencilFill"></ng-icon> Edit</button>
+                <button type="button" class="btn-edit btn btn-outline-primary" (click)="openEditProfileModal(editContent, profile)"><ng-icon name="bootstrapPencilFill"></ng-icon> Edit</button>
             </h6>
 			<h6>{{profile.userId}}</h6>
             <h6>{{profile.birthday.year}}-{{profile.birthday.month}}-{{profile.birthday.day}}</h6>
@@ -14,7 +14,7 @@
 </div>
 
 <!-------------------------- EDIT MODAL  -------------------------->
-<ng-template #content let-editModal>
+<ng-template #editContent let-editModal>
 	<div class="modal-header">
 		<h4 class="modal-title" id="edit-modal">Profile update</h4>
 		<button type="button" class="btn-close" aria-label="Close" (click)="editModal.dismiss('Cross click')"></button>
@@ -94,5 +94,95 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-outline-secondary" (click)="editModal.close('Save click')">Save</button>
+	</div>
+</ng-template>
+
+<!-------------------------- ADD MODAL  -------------------------->
+<ng-template #addContent let-addModal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="add-modal">New profile</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="addModal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form>
+            <div class="mb-3">
+				<label for="displayName">Display Name</label>
+				<div class="input-group">
+					<input
+						id="displayName"
+						class="form-control"
+						placeholder="Display name"
+						[(ngModel)]="newProfile.displayName"
+						name="displayName"
+					/>
+				</div>
+			</div>
+            <div class="mb-3">
+				<label for="gender">Gender</label>
+                <div class="input-group">
+					<input
+						id="gender"
+						class="form-control"
+						placeholder="Gender"
+						[(ngModel)]="newProfile.gender"
+						name="gender"
+					/>
+				</div>
+            </div>
+			<div class="mb-3">
+				<label for="userId">UserId</label>
+                <div class="input-group">
+					<input
+						id="userId"
+						class="form-control"
+						placeholder="User Id"
+						[(ngModel)]="newProfile.userId"
+						name="userId"
+					/>
+				</div>
+            </div>
+			<div class="mb-3">
+				<label for="dateOfBirth">Date of birth</label>
+				<div class="input-group">
+					<input
+						id="dateOfBirth"
+						class="form-control"
+						placeholder="yyyy-mm-dd"
+						[(ngModel)]="newProfile.birthday"
+                        name="dp"
+						ngbDatepicker
+						#dp="ngbDatepicker"
+					/>
+					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"><ng-icon name="bootstrapCalendar3" size="1.2em"></ng-icon></button>
+				</div>
+			</div>
+            <div class="mb-3">
+				<label for="job">Job</label>
+				<div class="input-group">
+					<input
+						id="job"
+						class="form-control"
+						placeholder="Job"
+						[(ngModel)]="newProfile.job"
+						name="job"
+					/>
+				</div>
+			</div>
+            <div class="mb-3">
+				<label for="bio">Bio</label>
+				<div class="input-group">
+					<input
+						id="bio"
+						class="form-control"
+						placeholder="Bio"
+						[(ngModel)]="newProfile.bio"
+						name="bio"
+					/>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-secondary" (click)="addModal.close('Save click')">Save</button>
 	</div>
 </ng-template>

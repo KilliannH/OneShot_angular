@@ -15,4 +15,7 @@ export class DataService {
   saveProfileById(updatedProfile: any): Observable<any> {
     return this.http.put('/api/profiles/' + updatedProfile.id, updatedProfile);
   }
+  newProfile(newProfile: any): Observable<any> {
+    return this.http.post('/api/profiles', newProfile);
+  }
 }

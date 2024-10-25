@@ -19,6 +19,7 @@ export class ProfilesComponent {
   profiles: Array<any> = []
   private modalService = inject(NgbModal);
   selectedProfile: any;
+  newProfile: any;
 
   constructor(private _dataservice: DataService, private _toastr: ToastrService) {}
 
@@ -60,13 +61,46 @@ export class ProfilesComponent {
           next: (response: any) => {
             console.log("Saved successfully", response);
             // show it
-            this._toastr.success('successfully', 'Saved');
+            this._toastr.success("successfully", "Saved");
           }, error: (error: any) => {
-            this._toastr.error("Failed to save");
-            // console.log("Failed to save", error);
+            this._toastr.error("Failed to save", error);
           }
         });
+			},
+			(reason) => {
+				console.log(`Dismissed ${this.getDismissReason(reason)}`);
+			},
+		);
+	}
 
+  openAddProfileModal(content: TemplateRef<any>) {
+    this.newProfile = {displayName: "", gender: "", userId: "", birthday: "", job: "", bio: ""};
+		this.modalService.open(content, { ariaLabelledBy: 'add-modal' }).result.then(
+			(result) => {
+        console.log(this.newProfile)
+				const dbProfile = {
+          id: this.newProfile.id,
+          displayName: this.newProfile.displayName,
+          gender: this.newProfile.gender,
+          userId: this.newProfile.userId,
+
+          // retake the good date format
+          birthday: new Date(this.newProfile.birthday.year, this.newProfile.birthday.month -1, this.newProfile.birthday.day).getTime(),
+          
+          job: this.newProfile.job,
+          bio: this.newProfile.bio
+        }
+
+        // save it to be
+        this._dataservice.newProfile(dbProfile).subscribe({
+          next: (response: any) => {
+            console.log("Saved successfully", response);
+            // show it
+            this._toastr.success("successfully", "Saved");
+          }, error: (error: any) => {
+            this._toastr.error("Failed to save", error);
+          }
+        });
 			},
 			(reason) => {
 				console.log(`Dismissed ${this.getDismissReason(reason)}`);
