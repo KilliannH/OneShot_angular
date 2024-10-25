@@ -13,3 +13,13 @@
     float: right;
     margin-left: 10px;
 }
+
+.profile-images-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.profile-image {
+    width: 100px;
+}
