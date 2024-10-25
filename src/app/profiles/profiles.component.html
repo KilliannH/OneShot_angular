@@ -2,7 +2,7 @@
     <h3>Profiles : <button type="button" class="btn-add btn btn-primary" (click)="openAddProfileModal(addContent)"><ng-icon name="bootstrapPlusLg"></ng-icon> Add</button></h3>
     <div *ngFor="let profile of profiles" class="item">
             <h6>{{profile.displayName}}, <span>{{profile.gender}}</span>
-                <button type="button" class="btn-trash btn btn-outline-danger"><ng-icon name="bootstrapTrashFill"></ng-icon></button>
+                <button type="button" class="btn-trash btn btn-outline-danger" (click)="openDeleteProfileModal(deleteContent, profile)"><ng-icon name="bootstrapTrashFill"></ng-icon></button>
                 <button type="button" class="btn-edit btn btn-outline-primary" (click)="openEditProfileModal(editContent, profile)"><ng-icon name="bootstrapPencilFill"></ng-icon> Edit</button>
             </h6>
 			<h6>{{profile.userId}}</h6>
@@ -184,5 +184,21 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-outline-secondary" (click)="addModal.close('Save click')">Save</button>
+	</div>
+</ng-template>
+
+<!-------------------------- DELETE MODAL  -------------------------->
+<ng-template #deleteContent let-deleteModal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="delete-modal">Delete profile</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="deleteModal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+        <div class="mb-3">
+			<p>Are you sure you want to delete this modal ?</p>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-danger" (click)="deleteModal.close('Delete click')">Delete</button>
 	</div>
 </ng-template>

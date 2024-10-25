@@ -94,15 +94,41 @@ export class ProfilesComponent {
         // save it to be
         this._dataservice.newProfile(dbProfile).subscribe({
           next: (response: any) => {
-            console.log("Saved successfully", response);
+            console.log("Added successfully", response);
 
-            this._toastr.success("successfully", "Saved");
+            this._toastr.success("successfully", "Added");
 
             // Use the response to create a new profile object to ensure consistency
             this.profiles.push({ ...dbProfile, id: response.id, birthday: this.toNgbDate(response.birthday)}); // Assuming the response returns the new ID
 
           }, error: (error: any) => {
-            this._toastr.error("Failed to save");
+            this._toastr.error("Failed to add");
+          }
+        });
+			},
+			(reason) => {
+				console.log(`Dismissed ${this.getDismissReason(reason)}`);
+			},
+		);
+	}
+
+  openDeleteProfileModal(content: TemplateRef<any>, profile: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'delete-modal' }).result.then(
+			(result) => {
+        console.log(this.selectedProfile)
+
+        // save it to be
+        this._dataservice.removeProfile(profile.id).subscribe({
+          next: (response: any) => {
+            console.log("Removed successfully");
+
+            this._toastr.success("successfully", "Deleted");
+
+            const deletedProfileIndex = this.profiles.indexOf(profile);
+            this.profiles.splice(deletedProfileIndex, 1);
+
+          }, error: (error: any) => {
+            this._toastr.error("Failed to delete");
           }
         });
 			},

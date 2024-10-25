@@ -18,4 +18,7 @@ export class DataService {
   newProfile(newProfile: any): Observable<any> {
     return this.http.post('/api/profiles', newProfile);
   }
+  removeProfile(profileId: string): Observable<any> {
+    return this.http.delete('/api/profiles/' + profileId);
+  }
 }
