@@ -53,7 +53,8 @@ export class ProfilesComponent {
           birthday: new Date(this.selectedProfile.birthday.year, this.selectedProfile.birthday.month -1, this.selectedProfile.birthday.day).getTime(),
           
           job: this.selectedProfile.job,
-          bio: this.selectedProfile.bio
+          bio: this.selectedProfile.bio,
+          imageUrls: this.selectedProfile.imageUrls
         }
 
         // save it to be
