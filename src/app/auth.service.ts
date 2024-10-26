@@ -21,6 +21,15 @@ export class AuthService {
       }));
   }
 
+  signup(username: string, email: string, password: string): any {
+    return this.http.post('/api/signup', { username, email, password }).pipe(map((result: any) => {
+        console.log(result);
+        localStorage.setItem('token', result.token);
+          this.loggedIn.next(true)
+          return result;
+      }));
+  }
+
   logout() {
     this.loggedIn.next(false);
     // Clear token

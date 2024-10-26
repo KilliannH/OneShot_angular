@@ -1,1 +1,21 @@
-<p>signup works!</p>
+<main class="form-signin">
+    <form (ngSubmit)="signup()">
+      <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+  
+      <div class="form-floating">
+        <input type="text" [(ngModel)]="username" name="username" class="form-control" id="floatingInput" placeholder="Username">
+        <label for="floatingInput">Username</label>
+      </div>
+      <div class="form-floating">
+        <input type="email" [(ngModel)]="email" name="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
+        <label for="floatingEmail">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input [(ngModel)]="password" type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+  
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+      <p class="mt-5 mb-3 text-muted">© 2024</p>
+    </form>
+  </main>
